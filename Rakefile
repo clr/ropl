@@ -4,7 +4,6 @@ require "bundler/gem_tasks"
 require 'rubygems'
 gem 'bundler'
 require 'bundler'
-require 'ripple'
 
 begin
   Bundler.setup(:default, :development)
