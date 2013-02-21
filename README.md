@@ -1,6 +1,12 @@
 # Ropl
 
-TODO: Write a gem description
+There are plenty of ORMs out there.  With a K/V database like Riak,
+having an ORM means an awkward fit, since Riak doesn't natively 
+have any way to represent a Relationship.
+
+In a conversation with Nathan Aschbacher, it was pointed out that 
+all we really want in many cases is persistence.  So here it is -- 
+a stupidly simple Riak Object Persistence Layer. ROPL.
 
 ## Installation
 
@@ -18,7 +24,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Take a look at test/test_composition_story.rb and test/test_oop_story.rb
+The later is the preferred usage.
 
 ## Contributing
 

@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["clr@port49.com"]
   gem.description   = %q{Riak Object Persistence Layer}
   gem.summary       = %q{Why bother with an ORM? Just store the object. This is OOP, after all.}
-  gem.homepage      = ""
+  gem.homepage      = "git@github.com:clr/ropl.git"
 
   gem.add_dependency "riak-client", "~> 1.0.0"
 
