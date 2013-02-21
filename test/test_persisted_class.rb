@@ -1,5 +1,9 @@
 require File.expand_path(File.join('..','helper'), __FILE__)
 
+class PersistedClass
+  attr_accessor :attribute_one, :attribute_two
+end
+
 class TestPersistedClass < Test::Unit::TestCase
   def setup
     riak_config = YAML.load(File.read(File.expand_path(File.join('..','riak.yml'), __FILE__)))[:test]
@@ -9,52 +13,53 @@ class TestPersistedClass < Test::Unit::TestCase
 
   def test_post
     # create some object without a key
-    @persisted_class = PersistedClass.new
-    @persisted_class.attribute_one = 'post data'
-    @persisted_class.attribute_two = 'other post data'
+    persisted_class = PersistedClass.new
+    persisted_class.attribute_one = 'post data'
+    persisted_class.attribute_two = 'other post data'
 
     # save it
-    response = @ropl.post @persisted_class
+    response = @ropl.post persisted_class
     assert response
   end
 
   def test_put
     # create some object with a key
-    @persisted_class = PersistedClass.new
-    @persisted_class.attribute_one = 'put data'
-    @persisted_class.attribute_two = 'other put data'
+    persisted_class = PersistedClass.new
+    persisted_class.attribute_one = 'put data'
+    persisted_class.attribute_two = 'other put data'
 
     # save it
-    response = @ropl.put @persisted_class, 'put key'
+    response = @ropl.put persisted_class, 'put key'
     assert_equal 'put key', response
   end
 
   def test_put_then_get
     # create some object with a key
-    @persisted_class = PersistedClass.new
-    @persisted_class.attribute_one = 'put data'
-    @persisted_class.attribute_two = 'other put data'
+    persisted_class = PersistedClass.new
+    persisted_class.attribute_one = 'put data'
+    persisted_class.attribute_two = 'other put data'
 
     # save it
-    @ropl.put @persisted_class, 'put key'
+    @ropl.put persisted_class, 'put key'
 
     # get the object back
-    @persisted_class = @ropl.get PersistedClass, 'put key'
-    assert_equal 'put data',       @persisted_class.attribute_one
-    assert_equal 'other put data', @persisted_class.attribute_two
+    persisted_class = @ropl.get PersistedClass, 'put key'
+    assert_equal 'put data',       persisted_class.attribute_one
+    assert_equal 'other put data', persisted_class.attribute_two
   end
 
+=begin
   def test_a_thousand_ops
     # create a thousand objects
     objects = 1000.times.map do
-      random_ascii = lambda{|n| rand(n).times.map{ rand(256).chr }.join }
+      random_ascii = lambda{|n| rand(n).times.map{rand(256).chr}.join}
 
       # create some object with a key
-      @persisted_class = PersistedClass.new
-      @persisted_class.attribute_one = random_ascii.call(1000)
-      @persisted_class.attribute_two = random_ascii.call(1000)
+      persisted_class = PersistedClass.new
+      persisted_class.attribute_one = random_ascii.call(1000)
+      persisted_class.attribute_two = random_ascii.call(1000)
 
-      [@persisted_class, random_ascii.call(20)]
+      [persisted_class, random_ascii.call(20)]
     end
 
     # persist each object
@@ -65,4 +70,5 @@ class TestPersistedClass < Test::Unit::TestCase
     end
     puts "\nOne thousand ops time elapsed: #{Time.now - start_time} seconds.\n"
   end
+=end
 end
